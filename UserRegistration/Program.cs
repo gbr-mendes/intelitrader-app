@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using UserRegistration.Models;
+using UserRegistration.Services.UserServices;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<UserContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("DataBase"))
 );
+builder.Services.AddScoped<IUserServices, UserServices>();
 
 var app = builder.Build();
 
