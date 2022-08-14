@@ -1,48 +1,55 @@
 using UserRegistration.Models;
-
+using UserRegistration.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace UserRegistration.Services.UserServices
 {
     public class UserServices : IUserServices
     {
-        private static List<User> _users = new List<User>()
-            {
-                new User(){Name="Gabriel", Age=22},
-                new User(){Name="Thiago", Age=35}
-            };
+        private readonly DataContext _context;
+        public UserServices(DataContext context)
+        {
+            _context = context;
+        }
         public async Task<List<User>> GetUsers()
         {
-            return _users;
+            List<User> users = await _context.Users.ToListAsync();
+            return users;
         }
-        public async Task<User> GetSingleUser(string id)
+        public async Task<User?> GetSingleUser(string id)
         {
-            return _users.Find(user => user.Id == id);
+            User? user = await _context.Users.FindAsync(id);
+            return user;
         }
-        public async Task<List<User>> AddUser(User user)
+        public async Task<bool> AddUser(User user)
         {
-            _users.Add(user);
-            return _users;
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return true;
         }
-        public async Task<User> UpdateUser(string id, User request)
+        public async Task<bool> UpdateUser(string id, User request)
         {
-            User? user = _users.Find(user => user.Id == id);
+            User? user = await _context.Users.FindAsync(id);
             if (user != null)
             {
                 user.Name = request.Name;
                 user.SurName = request.SurName;
                 user.Age = request.Age;
+                await _context.SaveChangesAsync();
+                return true;
             }
-            return user;
+            return false;
         }
-        public async Task<User> DeleteUser(string id)
+        public async Task<bool> DeleteUser(string id)
         {
-            User? user = _users.Find(user => user.Id == id);
+            User? user = await _context.Users.FindAsync(id);
             if (user != null)
             {
-                _users.Remove(user);
-                return user;
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                return true;
             }
-            return user;
+            return false;
         }
     }
 }

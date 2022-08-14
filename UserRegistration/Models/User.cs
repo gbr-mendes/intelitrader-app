@@ -11,6 +11,6 @@ namespace UserRegistration.Models
         [Required]
         public int Age { get; set; }
         [Required]
-        public DateTime CreationDate { get; private set; } = DateTime.Now;
+        public DateTime CreationDate { get; private set; } = DateTime.UtcNow;
     }
 }
