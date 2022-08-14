@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using UserRegistration.Models;
+using UserRegistration.Data;
 
 #nullable disable
 
 namespace UserRegistration.Migrations
 {
-    [DbContext(typeof(UserContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DataContext))]
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -38,7 +38,6 @@ namespace UserRegistration.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("SurName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using UserRegistration.Models;
+using UserRegistration.Data;
 using UserRegistration.Services.UserServices;
 
 
@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<UserContext>(
+builder.Services.AddDbContext<DataContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("DataBase"))
 );
 builder.Services.AddScoped<IUserServices, UserServices>();
@@ -20,7 +20,7 @@ var app = builder.Build();
 
 // Apply migrations on StartUp
 var scope = app.Services.CreateScope();
-var dataContext = scope.ServiceProvider.GetRequiredService<UserContext>();
+var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
 dataContext.Database.Migrate();
 
 // Configure the HTTP request pipeline.

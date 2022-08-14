@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using UserRegistration.Models;
+using UserRegistration.Data;
 
 #nullable disable
 
 namespace UserRegistration.Migrations
 {
-    [DbContext(typeof(UserContext))]
-    [Migration("20220812130521_InitialDataBase")]
-    partial class InitialDataBase
+    [DbContext(typeof(DataContext))]
+    [Migration("20220814120323_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,7 +40,6 @@ namespace UserRegistration.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("SurName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

@@ -10,20 +10,20 @@ namespace UserRegistration.Services.UserServices
                 new User(){Name="Gabriel", Age=22},
                 new User(){Name="Thiago", Age=35}
             };
-        public List<User> GetUsers()
+        public async Task<List<User>> GetUsers()
         {
             return _users;
         }
-        public User GetSingleUser(string id)
+        public async Task<User> GetSingleUser(string id)
         {
             return _users.Find(user => user.Id == id);
         }
-        public List<User> AddUser(User user)
+        public async Task<List<User>> AddUser(User user)
         {
             _users.Add(user);
             return _users;
         }
-        public User UpdateUser(string id, User request)
+        public async Task<User> UpdateUser(string id, User request)
         {
             User? user = _users.Find(user => user.Id == id);
             if (user != null)
@@ -34,7 +34,7 @@ namespace UserRegistration.Services.UserServices
             }
             return user;
         }
-        public User DeleteUser(string id)
+        public async Task<User> DeleteUser(string id)
         {
             User? user = _users.Find(user => user.Id == id);
             if (user != null)
