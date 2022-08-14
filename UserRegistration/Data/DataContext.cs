@@ -5,7 +5,7 @@ namespace UserRegistration.Data
 {
     public class DataContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> Users => Set<User>();
         public DataContext(DbContextOptions options) : base(options) { }
     }
 }
