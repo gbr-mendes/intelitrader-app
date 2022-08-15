@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using UserRegistration.Data;
 using UserRegistration.Services.UserServices;
-
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +15,13 @@ builder.Services.AddDbContext<DataContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("DataBase"))
 );
 builder.Services.AddScoped<IUserServices, UserServices>();
+
+// Serilog setup
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.File("./logs/logs.txt", rollingInterval: RollingInterval.Day)
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 

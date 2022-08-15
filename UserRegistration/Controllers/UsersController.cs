@@ -11,14 +11,23 @@ namespace UserRegistration.Controllers
     {
 
         private IUserServices _userServices;
-        public UsersController(IUserServices userServices)
+        private readonly ILogger _logger;
+        public UsersController(IUserServices userServices, ILogger<UsersController> logger)
         {
             _userServices = userServices;
+            _logger = logger;
         }
         [HttpGet]
         public async Task<ActionResult<List<User>>> GetUsers()
         {
-            return Ok(await _userServices.GetUsers());
+            try
+            {
+                return Ok(await _userServices.GetUsers());
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new CustomResponse(500, $"An unexpected error has ocurred: {e.Message}"));
+            }
         }
 
         [HttpGet("{id}")]
