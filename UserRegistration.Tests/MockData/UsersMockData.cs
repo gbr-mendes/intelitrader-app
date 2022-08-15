@@ -3,22 +3,12 @@ namespace UserRegistration.Tests.MockData
 {
     public class UsersMockData
     {
-        private static readonly List<User> _users = new List<User>{
-                new User("uniq-id", "Gabriel", "Mendes", 22),
-                new User{
-                    Name = "Thiago",
-                    Age = 33
-                },
-                new User{
-                    Name = "Leticia",
-                    SurName = "Fernandes",
-                    Age = 26
-                },
-                new User{
-                    Name = "Brenda",
-                    Age = 15
-                },
-
+        private static readonly List<User> _users = new List<User>
+            {
+                new User("uniq_id","Gabriel","Mendes", 22),
+                new User("Thiago",33),
+                new User("Leticia","Fernandes",26),
+                new User("Brenda", 15)
             };
         public static List<User> GetUsers()
         {

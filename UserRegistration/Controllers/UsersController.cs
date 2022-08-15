@@ -58,9 +58,25 @@ namespace UserRegistration.Controllers
             try
             {
                 _logger.LogInformation("Add user endpoint requested");
-                await _userServices.AddUser(user);
-                CustomResponse resp = new CustomResponse(201, "User registered successfully");
-                return CreatedAtAction(nameof(AddUser), resp);
+
+                if (string.IsNullOrEmpty(user.Name))
+                {
+                    CustomResponse resp = new CustomResponse(400, $"Error: The field name is required");
+                    _logger.LogError(resp.Message);
+                    return BadRequest(resp);
+                }
+                else if (user.Age <= 0)
+                {
+                    CustomResponse resp = new CustomResponse(400, $"Error: The field age is required and must be greater than zero");
+                    _logger.LogError(resp.Message);
+                    return BadRequest(resp);
+                }
+                else
+                {
+                    await _userServices.AddUser(user);
+                    CustomResponse resp = new CustomResponse(201, "User registered successfully");
+                    return CreatedAtAction(nameof(AddUser), resp);
+                }
             }
             catch (Exception e)
             {

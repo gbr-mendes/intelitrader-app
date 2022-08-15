@@ -31,7 +31,7 @@ public class TestUsersControllers
     }
 
     [Theory]
-    [InlineData("uniq-id")]
+    [InlineData("uniq_id")]
     public async Task GetSingleUser_OnSuccess_ReturnsStatusCode200(string id)
     {
         // Arrange
@@ -66,7 +66,7 @@ public class TestUsersControllers
     public async Task AddUser_OnSuccess_Returns201(string name, string? surName, int age)
     {
         // Arrange
-        User user = surName != null ? new User { Name = name, SurName = surName, Age = age } : new User { Name = name, Age = age };
+        User user = surName != null ? new User(name, surName, age) : new User(name, age);
         _userServices.Setup(_ => _.AddUser(user)).ReturnsAsync(UsersMockData.AddUser(user));
         var sut = new UsersController(_userServices.Object, _logger.Object);
 
@@ -76,5 +76,22 @@ public class TestUsersControllers
         // result
         result.Result.GetType().Should().Be(typeof(CreatedAtActionResult));
         (result.Result as CreatedAtActionResult).StatusCode.Should().Be(201);
+    }
+
+    [Theory]
+    [InlineData(null, "Due", 33)]
+    [InlineData("John", "Due", null)]
+    public async Task AddUser_OnFail_Returns400(string name, string? surName, int age)
+    {
+        // Arrange
+        User user = surName != null ? new User(name, surName, age) : new User(name, age);
+        _userServices.Setup(_ => _.AddUser(user)).ReturnsAsync(UsersMockData.AddUser(user));
+        var sut = new UsersController(_userServices.Object, _logger.Object);
+
+        // Act
+        var result = await sut.AddUser(user);
+        // Assert
+        result.Result.GetType().Should().Be(typeof(BadRequestObjectResult));
+        (result.Result as BadRequestObjectResult).StatusCode.Should().Be(400);
     }
 }
