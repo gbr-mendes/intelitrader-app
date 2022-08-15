@@ -22,10 +22,12 @@ namespace UserRegistration.Controllers
         {
             try
             {
+                _logger.LogInformation("Get users endpoint requested");
                 return Ok(await _userServices.GetUsers());
             }
             catch (Exception e)
             {
+                _logger.LogError(exception: e, message: "Error retrieving users");
                 return StatusCode(500, new CustomResponse(500, $"An unexpected error has ocurred: {e.Message}"));
             }
         }
@@ -35,8 +37,8 @@ namespace UserRegistration.Controllers
         {
             try
             {
+                _logger.LogInformation("Get single user endpoint requested");
                 User? user = await _userServices.GetSingleUser(id);
-
                 if (user == null)
                 {
                     return NotFound(new CustomResponse(404, $"User with id {id} not found"));
@@ -45,6 +47,7 @@ namespace UserRegistration.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(exception: e, message: "Error retrieving single user");
                 return StatusCode(500, new CustomResponse(500, $"An unexpected error has ocurred: {e.Message}"));
             }
         }
@@ -54,12 +57,14 @@ namespace UserRegistration.Controllers
         {
             try
             {
+                _logger.LogInformation("Add user endpoint requested");
                 await _userServices.AddUser(user);
                 CustomResponse resp = new CustomResponse(201, "User registered successfully");
                 return CreatedAtAction(nameof(AddUser), resp);
             }
             catch (Exception e)
             {
+                _logger.LogError(exception: e, message: "Error creating an user");
                 return StatusCode(500, new CustomResponse(500, $"An unexpected error has ocurred: {e.Message}"));
             }
         }
@@ -69,6 +74,7 @@ namespace UserRegistration.Controllers
         {
             try
             {
+                _logger.LogInformation("Update user endpoint requested");
                 bool updated = await _userServices.UpdateUser(id, request);
                 if (!updated)
                 {
@@ -78,6 +84,7 @@ namespace UserRegistration.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(exception: e, message: "Error updating an user");
                 return StatusCode(500, new CustomResponse(500, $"An unexpected error has ocurred: {e.Message}"));
             }
         }
@@ -87,6 +94,7 @@ namespace UserRegistration.Controllers
         {
             try
             {
+                _logger.LogInformation("Delete user endpoint requested");
                 bool deleted = await _userServices.DeleteUser(id);
                 if (deleted)
                 {
@@ -96,6 +104,7 @@ namespace UserRegistration.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(exception: e, message: "Error deleting an user");
                 return StatusCode(500, new CustomResponse(500, $"An unexpected error has ocurred: {e.Message}"));
             }
         }

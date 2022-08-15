@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using UserRegistration.Data;
 using UserRegistration.Services.UserServices;
 using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
