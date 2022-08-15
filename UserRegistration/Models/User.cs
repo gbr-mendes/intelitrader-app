@@ -12,5 +12,14 @@ namespace UserRegistration.Models
         public int Age { get; set; }
         [Required]
         public DateTime CreationDate { get; private set; } = DateTime.UtcNow;
+
+        public User() { }
+        public User(string id, string name, string surName, int age)
+        {
+            Id = id;
+            Name = name;
+            SurName = surName;
+            Age = age;
+        }
     }
 }
