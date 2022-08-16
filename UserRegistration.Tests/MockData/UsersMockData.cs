@@ -1,4 +1,3 @@
-using UserRegistration.Models;
 using UserRegistration.Dtos.User;
 
 namespace UserRegistration.Tests.MockData
