@@ -1,29 +1,33 @@
 using UserRegistration.Models;
 using UserRegistration.Data;
 using Microsoft.EntityFrameworkCore;
+using UserRegistration.Dtos.User;
+using AutoMapper;
 
 namespace UserRegistration.Services.UserServices
 {
     public class UserServices : IUserServices
     {
         private readonly DataContext _context;
-        public UserServices(DataContext context)
+        private readonly IMapper _mapper;
+        public UserServices(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
-        public async Task<List<User>> GetUsers()
+        public async Task<List<GetUserDto>> GetUsers()
         {
             List<User> users = await _context.Users.ToListAsync();
-            return users;
+            return users.Select(user => _mapper.Map<GetUserDto>(user)).ToList();
         }
-        public async Task<User?> GetSingleUser(string id)
+        public async Task<GetUserDto> GetSingleUser(string id)
         {
-            User? user = await _context.Users.FindAsync(id);
-            return user;
+            User user = await _context.Users.FindAsync(id);
+            return _mapper.Map<GetUserDto>(user);
         }
-        public async Task<bool> AddUser(User user)
+        public async Task<bool> AddUser(AddUserDto user)
         {
-            _context.Users.Add(user);
+            _context.Users.Add(_mapper.Map<User>(user));
             await _context.SaveChangesAsync();
             return true;
         }

@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
-namespace UserRegistration.Models
+namespace UserRegistration.Dtos.User
 {
-    public class User
+    public class GetUserDto
     {
         [Required]
         public string Id { get; private set; } = System.Guid.NewGuid().ToString();
@@ -12,7 +11,7 @@ namespace UserRegistration.Models
         public string? SurName { get; set; }
         [Required]
         public int Age { get; set; }
-        // [Required]
+        [Required]
         public DateTime CreationDate { get; private set; } = DateTime.UtcNow;
     }
 }

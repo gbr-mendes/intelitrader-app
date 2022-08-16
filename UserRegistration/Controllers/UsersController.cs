@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using UserRegistration.Controllers.Responses;
 using UserRegistration.Models;
 using UserRegistration.Services.UserServices;
+using UserRegistration.Dtos.User;
 
 namespace UserRegistration.Controllers
 {
@@ -18,7 +19,7 @@ namespace UserRegistration.Controllers
             _logger = logger;
         }
         [HttpGet]
-        public async Task<ActionResult<List<User>>> GetUsers()
+        public async Task<ActionResult<List<GetUserDto>>> GetUsers()
         {
             try
             {
@@ -33,12 +34,12 @@ namespace UserRegistration.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetSingleUser(string id)
+        public async Task<ActionResult<GetUserDto>> GetSingleUser(string id)
         {
             try
             {
                 _logger.LogInformation("Get single user endpoint requested");
-                User? user = await _userServices.GetSingleUser(id);
+                GetUserDto user = await _userServices.GetSingleUser(id);
                 if (user == null)
                 {
                     return NotFound(new CustomResponse(404, $"User with id {id} not found"));
@@ -53,7 +54,7 @@ namespace UserRegistration.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CustomResponse>> AddUser(User user)
+        public async Task<ActionResult<CustomResponse>> AddUser(AddUserDto user)
         {
             try
             {
