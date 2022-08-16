@@ -1,26 +1,35 @@
 using UserRegistration.Models;
+using UserRegistration.Dtos.User;
+
 namespace UserRegistration.Tests.MockData
 {
     public class UsersMockData
     {
-        private static readonly List<User> _users = new List<User>
+        private static readonly List<GetUserDto> _getUsers = new List<GetUserDto>
             {
-                new User("uniq_id","Gabriel","Mendes", 22),
-                new User("Thiago",33),
-                new User("Leticia","Fernandes",26),
-                new User("Brenda", 15)
+                new GetUserDto{Id = "uniq_id",Name="Gabriel",SurName="Mendes", Age=22},
+                new GetUserDto{Name="Thiago",Age=33},
+                new GetUserDto{Name="Leticia",SurName="Fernandes",Age=26},
+                new GetUserDto{Name="Brenda", Age=15}
             };
-        public static List<User> GetUsers()
+        private static readonly List<AddUserDto> _addUsers = new List<AddUserDto>
+            {
+                new AddUserDto{Name="Gabriel",SurName="Mendes", Age=22},
+                new AddUserDto{Name="Thiago",Age=33},
+                new AddUserDto{Name="Leticia",SurName="Fernandes",Age=26},
+                new AddUserDto{Name="Brenda", Age=15}
+            };
+        public static List<GetUserDto> GetUsers()
         {
-            return _users;
+            return _getUsers;
         }
-        public static User? GetSingleUser(string id)
+        public static GetUserDto GetSingleUser(string id)
         {
-            return _users.Find(user => user.Id == id);
+            return _getUsers.Find(user => user.Id == id);
         }
-        public static bool AddUser(User user)
+        public static bool AddUser(AddUserDto user)
         {
-            _users.Add(user);
+            _addUsers.Add(user);
             return true;
         }
     }

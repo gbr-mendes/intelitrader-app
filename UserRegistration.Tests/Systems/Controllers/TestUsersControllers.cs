@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using UserRegistration.Tests.MockData;
 using UserRegistration.Controllers;
-using UserRegistration.Models;
+using UserRegistration.Dtos.User;
 using UserRegistration.Services.UserServices;
 
 namespace UserRegistration.Tests.Systems.Controllers;
@@ -66,7 +66,7 @@ public class TestUsersControllers
     public async Task AddUser_OnSuccess_Returns201(string name, string? surName, int age)
     {
         // Arrange
-        User user = surName != null ? new User(name, surName, age) : new User(name, age);
+        AddUserDto user = surName != null ? new AddUserDto { Name = name, SurName = surName, Age = age } : new AddUserDto { Name = name, Age = age };
         _userServices.Setup(_ => _.AddUser(user)).ReturnsAsync(UsersMockData.AddUser(user));
         var sut = new UsersController(_userServices.Object, _logger.Object);
 
@@ -84,7 +84,7 @@ public class TestUsersControllers
     public async Task AddUser_OnFail_Returns400(string name, string? surName, int age)
     {
         // Arrange
-        User user = surName != null ? new User(name, surName, age) : new User(name, age);
+        AddUserDto user = surName != null ? new AddUserDto { Name = name, SurName = surName, Age = age } : new AddUserDto { Name = name, Age = age };
         _userServices.Setup(_ => _.AddUser(user)).ReturnsAsync(UsersMockData.AddUser(user));
         var sut = new UsersController(_userServices.Object, _logger.Object);
 
