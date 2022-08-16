@@ -7,17 +7,11 @@ namespace UserRegistration.Tests.MockData
     {
         private static readonly List<GetUserDto> _getUsers = new List<GetUserDto>
             {
-                new GetUserDto{Id = "uniq_id",Name="Gabriel",SurName="Mendes", Age=22},
-                new GetUserDto{Name="Thiago",Age=33},
-                new GetUserDto{Name="Leticia",SurName="Fernandes",Age=26},
-                new GetUserDto{Name="Brenda", Age=15}
+                new GetUserDto{Id = "uniq_id",Name="John",SurName="Doe", Age=22}
             };
-        private static readonly List<AddUserDto> _addUsers = new List<AddUserDto>
+        private static readonly List<AddUpdateUserDto> _addUpdateUsers = new List<AddUpdateUserDto>
             {
-                new AddUserDto{Name="Gabriel",SurName="Mendes", Age=22},
-                new AddUserDto{Name="Thiago",Age=33},
-                new AddUserDto{Name="Leticia",SurName="Fernandes",Age=26},
-                new AddUserDto{Name="Brenda", Age=15}
+                new AddUpdateUserDto{Name="John",SurName="Doe", Age=22}
             };
         public static List<GetUserDto> GetUsers()
         {
@@ -27,10 +21,30 @@ namespace UserRegistration.Tests.MockData
         {
             return _getUsers.Find(user => user.Id == id);
         }
-        public static bool AddUser(AddUserDto user)
+        public static bool AddUser(AddUpdateUserDto user)
         {
-            _addUsers.Add(user);
+            _addUpdateUsers.Add(user);
             return true;
+        }
+        public static bool UpdateUser(string id, AddUpdateUserDto request)
+        {
+            _addUpdateUsers[0].SetId("uniq_id");
+            AddUpdateUserDto user = _addUpdateUsers.Find(u => u.GetId() == id);
+            if (user != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        public static bool DeleteUser(string id)
+        {
+            _addUpdateUsers[0].SetId("uniq_id");
+            GetUserDto user = _getUsers.Find(u => u.Id == id);
+            if (user != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

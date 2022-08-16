@@ -54,7 +54,7 @@ namespace UserRegistration.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CustomResponse>> AddUser(AddUserDto user)
+        public async Task<ActionResult<CustomResponse>> AddUser(AddUpdateUserDto user)
         {
             try
             {
@@ -87,17 +87,32 @@ namespace UserRegistration.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<User>> UpdateUser(string id, User request)
+        public async Task<ActionResult<User>> UpdateUser(string id, AddUpdateUserDto request)
         {
             try
             {
-                _logger.LogInformation("Update user endpoint requested");
-                bool updated = await _userServices.UpdateUser(id, request);
-                if (!updated)
+                if (string.IsNullOrEmpty(request.Name))
                 {
-                    return BadRequest(new CustomResponse(404, $"User with id {id} not found"));
+                    CustomResponse resp = new CustomResponse(400, $"Error: The field name is required");
+                    _logger.LogError(resp.Message);
+                    return BadRequest(resp);
                 }
-                return Ok(request);
+                else if (request.Age <= 0)
+                {
+                    CustomResponse resp = new CustomResponse(400, $"Error: The field age is required and must be greater than zero");
+                    _logger.LogError(resp.Message);
+                    return BadRequest(resp);
+                }
+                else
+                {
+                    _logger.LogInformation("Update user endpoint requested");
+                    bool updated = await _userServices.UpdateUser(id, request);
+                    if (!updated)
+                    {
+                        return BadRequest(new CustomResponse(404, $"User with id {id} not found"));
+                    }
+                    return Ok(request);
+                }
             }
             catch (Exception e)
             {

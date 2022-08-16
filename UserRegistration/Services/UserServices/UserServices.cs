@@ -25,15 +25,15 @@ namespace UserRegistration.Services.UserServices
             User user = await _context.Users.FindAsync(id);
             return _mapper.Map<GetUserDto>(user);
         }
-        public async Task<bool> AddUser(AddUserDto user)
+        public async Task<bool> AddUser(AddUpdateUserDto user)
         {
             _context.Users.Add(_mapper.Map<User>(user));
             await _context.SaveChangesAsync();
             return true;
         }
-        public async Task<bool> UpdateUser(string id, User request)
+        public async Task<bool> UpdateUser(string id, AddUpdateUserDto request)
         {
-            User? user = await _context.Users.FindAsync(id);
+            User user = await _context.Users.FindAsync(id);
             if (user != null)
             {
                 user.Name = request.Name;
@@ -46,7 +46,7 @@ namespace UserRegistration.Services.UserServices
         }
         public async Task<bool> DeleteUser(string id)
         {
-            User? user = await _context.Users.FindAsync(id);
+            User user = await _context.Users.FindAsync(id);
             if (user != null)
             {
                 _context.Users.Remove(user);

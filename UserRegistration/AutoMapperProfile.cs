@@ -9,7 +9,7 @@ namespace UserRegistration
         public AutoMapperProfile()
         {
             CreateMap<User, GetUserDto>();
-            CreateMap<AddUserDto, User>();
+            CreateMap<AddUpdateUserDto, User>();
         }
     }
 }

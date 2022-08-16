@@ -8,7 +8,7 @@ namespace UserRegistration.Dtos.User
         public string Id { get; set; } = System.Guid.NewGuid().ToString();
         [Required]
         public string Name { get; set; }
-        public string? SurName { get; set; }
+        public string SurName { get; set; }
         [Required]
         public int Age { get; set; }
         [Required]
