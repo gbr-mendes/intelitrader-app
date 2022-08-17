@@ -9,11 +9,8 @@ using Moq;
 
 namespace UserRegistration.Tests.Systems.Models
 {
-    public class UserDtosValidation
+    public class TestAddUpdateUserDtoValidation
     {
-        private readonly static Mock<IUserServices> _userServices = new Mock<IUserServices>();
-        private readonly static Mock<ILogger<UsersController>> _logger = new Mock<ILogger<UsersController>>();
-
         [Theory]
         [InlineData("John", "Doe", 33)]
         [InlineData("Jane", null, 33)]
