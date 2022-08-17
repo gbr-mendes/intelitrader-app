@@ -80,14 +80,15 @@ public class TestUsersControllers
 
     [Theory]
     [InlineData(null, "Doe", 33)]
-    [InlineData("John", "Doe", null)]
+    [InlineData("John", "Doe", 0)]
+    [InlineData("John", "Doe", -1)]
     public async Task AddUser_OnFail_Returns400(string name, string surName, int age)
     {
         // Arrange
         AddUpdateUserDto user = surName != null ? new AddUpdateUserDto { Name = name, SurName = surName, Age = age } : new AddUpdateUserDto { Name = name, Age = age };
         _userServices.Setup(_ => _.AddUser(user)).ReturnsAsync(UsersMockData.AddUser(user));
         var sut = new UsersController(_userServices.Object, _logger.Object);
-
+        sut.ModelState.AddModelError("Field", "Any error");
         // Act
         var result = await sut.AddUser(user);
         // Assert
@@ -115,14 +116,15 @@ public class TestUsersControllers
     [Theory]
     [InlineData("uniq_id", null, "New SurName", 25)]
     [InlineData("uniq_id", null, null, 25)]
-    [InlineData("uniq_id", "New Name", null, null)]
+    [InlineData("uniq_id", "New Name", null, 0)]
+    [InlineData("uniq_id", "New Name", null, -1)]
     public async Task UpdateUser_OnFail_Returns400(string id, string name, string surName, int age)
     {
         // Arrange
         AddUpdateUserDto user = surName != null ? new AddUpdateUserDto { Name = name, SurName = surName, Age = age } : new AddUpdateUserDto { Name = name, Age = age };
         _userServices.Setup(_ => _.UpdateUser(id, user)).ReturnsAsync(UsersMockData.UpdateUser(id, user));
         var sut = new UsersController(_userServices.Object, _logger.Object);
-
+        sut.ModelState.AddModelError("Field", "Any error");
         // Act
         var result = await sut.UpdateUser(id, user);
         // Assert

@@ -58,26 +58,16 @@ namespace UserRegistration.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    List<string> allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage)).ToList();
+                    return BadRequest(new ErrorResponse(400, "Error: Invalid Payload", allErrors));
+                }
                 _logger.LogInformation("Add user endpoint requested");
+                await _userServices.AddUser(user);
+                CustomResponse resp = new CustomResponse(201, "User registered successfully");
+                return CreatedAtAction(nameof(AddUser), resp);
 
-                if (string.IsNullOrEmpty(user.Name))
-                {
-                    CustomResponse resp = new CustomResponse(400, $"Error: The field name is required");
-                    _logger.LogError(resp.Message);
-                    return BadRequest(resp);
-                }
-                else if (user.Age <= 0)
-                {
-                    CustomResponse resp = new CustomResponse(400, $"Error: The field age is required and must be greater than zero");
-                    _logger.LogError(resp.Message);
-                    return BadRequest(resp);
-                }
-                else
-                {
-                    await _userServices.AddUser(user);
-                    CustomResponse resp = new CustomResponse(201, "User registered successfully");
-                    return CreatedAtAction(nameof(AddUser), resp);
-                }
             }
             catch (Exception e)
             {
@@ -91,28 +81,20 @@ namespace UserRegistration.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(request.Name))
+
+                if (!ModelState.IsValid)
                 {
-                    CustomResponse resp = new CustomResponse(400, $"Error: The field name is required");
-                    _logger.LogError(resp.Message);
-                    return BadRequest(resp);
+                    List<string> allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage)).ToList();
+                    return BadRequest(new ErrorResponse(400, "Error: Invalid Payload", allErrors));
                 }
-                else if (request.Age <= 0)
+                _logger.LogInformation("Update user endpoint requested");
+                bool updated = await _userServices.UpdateUser(id, request);
+                if (!updated)
                 {
-                    CustomResponse resp = new CustomResponse(400, $"Error: The field age is required and must be greater than zero");
-                    _logger.LogError(resp.Message);
-                    return BadRequest(resp);
+                    return BadRequest(new CustomResponse(404, $"User with id {id} not found"));
                 }
-                else
-                {
-                    _logger.LogInformation("Update user endpoint requested");
-                    bool updated = await _userServices.UpdateUser(id, request);
-                    if (!updated)
-                    {
-                        return BadRequest(new CustomResponse(404, $"User with id {id} not found"));
-                    }
-                    return Ok(request);
-                }
+                return Ok(request);
+
             }
             catch (Exception e)
             {

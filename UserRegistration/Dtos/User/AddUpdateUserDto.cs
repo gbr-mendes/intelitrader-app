@@ -9,6 +9,7 @@ namespace UserRegistration.Dtos.User
         public string Name { get; set; }
         public string SurName { get; set; }
         [Required]
+        [Range(1, 120)]
         public int Age { get; set; }
 
         public string GetId()
