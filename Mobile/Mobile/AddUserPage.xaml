@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobile.AddUserPage"
+             Visual="Material">
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Label Text="Add User"
+                FontSize="27"
+                   TextColor="#000"
+                HorizontalOptions="CenterAndExpand" />
+            <StackLayout Margin="5">
+                <Entry x:Name="entryName" Placeholder="Name" Keyboard="Text" FontSize="20"/>
+                <Entry x:Name="entrySurName" Placeholder="Sur Name" Keyboard="Text" FontSize="20"/>
+                <Entry x:Name="entryAge" Placeholder="Age" Keyboard="Numeric" FontSize="20"/>
+                <Button x:Name="addUserBtn" FontSize="27" Clicked="addUserBtn_Clicked" Text="Register"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

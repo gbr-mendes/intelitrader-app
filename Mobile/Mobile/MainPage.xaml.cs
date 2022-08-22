@@ -14,5 +14,10 @@ namespace Mobile
         {
             InitializeComponent();
         }
+
+        private void AddUserPageBtn_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new AddUserPage());
+        }
     }
 }
