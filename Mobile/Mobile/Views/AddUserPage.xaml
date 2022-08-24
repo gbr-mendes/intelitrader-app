@@ -14,7 +14,7 @@
                    TextColor="#000"
                 HorizontalOptions="CenterAndExpand" />
             <StackLayout Margin="5">
-                <Entry Placeholder="Name" Keyboard="Text" FontSize="20" Text="{Binding Name, Mode=OneWayToSource}"/>
+                <Entry Placeholder="Name" Keyboard="Text" FontSize="20" Text="{Binding Name}"/>
                 <Entry Placeholder="Sur Name" Keyboard="Text" FontSize="20" Text="{Binding SurName}"/>
                 <Entry Placeholder="Age" Keyboard="Numeric" FontSize="20" Text="{Binding Age}"/>
                 <Button x:Name="addUserBtn" FontSize="27" Command="{Binding AddUserCommand}" Text="Register"/>

@@ -1,4 +1,5 @@
-﻿using Mobile.Views;
+﻿using Mobile.Services;
+using Mobile.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,7 +11,7 @@ namespace Mobile
         public App()
         {
             InitializeComponent();
-
+            DependencyService.Register<IUserRegistrationAPI, UserRegistrationAPI>();
             MainPage = new NavigationPage(new MainPage());
         }
 

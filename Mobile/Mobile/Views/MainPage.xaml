@@ -11,9 +11,9 @@
         <StackLayout Padding="20">
             <FlexLayout JustifyContent="SpaceBetween">
                 <Label Text="User Registration" FontSize="25" TextColor="Black"/>
-                <Button Text="Add" Command="{Binding NavigateCommand}"/>
+                <Button Text="Add" Clicked="Navigate_to_AddUser"/>
             </FlexLayout>
-            <ContentView>
+            <ContentView IsVisible="{Binding ShowUsersList}">
                 <ListView ItemsSource="{Binding Users}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -24,6 +24,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </ContentView>
+            <Label Text="No users yet" TextColor="Black" FontSize="30" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" IsVisible="{Binding ShowNoUsersLabel}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

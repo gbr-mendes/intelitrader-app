@@ -20,13 +20,18 @@ namespace Mobile.Views
         {
             InitializeComponent();
 
-            _mainPageViewModel = new MainPageViewModel(Navigation, new UserRegistrationAPI());
+            _mainPageViewModel = new MainPageViewModel();
             BindingContext = _mainPageViewModel;
         }
 
         protected override void OnAppearing()
         {
             _mainPageViewModel.PopulateUsers();
+        }
+
+        private async void Navigate_to_AddUser(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AddUserPage());
         }
     }
 }
