@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Mobile.ViewsModels"
+             Visual="Material"
+             x:Class="Mobile.Views.MainPage">
+    <ContentPage.BindingContext>
+        <local:MainPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <FlexLayout JustifyContent="SpaceBetween">
+                <Label Text="User Registration" FontSize="25" TextColor="Black"/>
+                <Button Text="Add" Command="{Binding NavigateCommand}"/>
+            </FlexLayout>
+            <ContentView>
+                <ListView ItemsSource="{Binding Users}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Name}" FontSize="25" TextColor="Black"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ContentView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

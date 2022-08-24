@@ -4,14 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Mobile.Services
 {
-    internal interface IUserRegistrationAPI
+    public interface IUserRegistrationAPI
     {
         HttpClient GetClient();
-        List<User> GetUsers();
-        void AddUser(AddUpdateUserDto user);
+        Task<IEnumerable<User>> GetUsers();
+        Task AddUser(AddUpdateUserDto user);
         void UpdateUser(string id, AddUpdateUserDto request);
         void DeleteUser(string id);
     }

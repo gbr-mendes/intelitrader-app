@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Mobile.Models.Dtos
 {
-    internal class GetUserDto
+    public class GetUserDto
     {
         public string Id { get; private set; }
         public string Name { get; set; }

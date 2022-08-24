@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Mobile.Models.Dtos
 {
-    internal class AddUpdateUserDto
+    public class AddUpdateUserDto
     {
+        [JsonProperty("name")]
         public string Name { get; set; }
+        [JsonProperty("surName")]
         public string SurName { get; set; }
+        [JsonProperty("age")]
         public int Age { get; set; }
 
         public AddUpdateUserDto() { }

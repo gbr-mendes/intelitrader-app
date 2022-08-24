@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Mobile.ViewsModels"
              x:Class="Mobile.AddUserPage"
              Visual="Material">
+    <ContentPage.BindingContext>
+        <local:AddUserViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Padding="20">
             <Label Text="Add User"
@@ -10,10 +14,10 @@
                    TextColor="#000"
                 HorizontalOptions="CenterAndExpand" />
             <StackLayout Margin="5">
-                <Entry x:Name="entryName" Placeholder="Name" Keyboard="Text" FontSize="20"/>
-                <Entry x:Name="entrySurName" Placeholder="Sur Name" Keyboard="Text" FontSize="20"/>
-                <Entry x:Name="entryAge" Placeholder="Age" Keyboard="Numeric" FontSize="20"/>
-                <Button x:Name="addUserBtn" FontSize="27" Clicked="addUserBtn_Clicked" Text="Register"/>
+                <Entry Placeholder="Name" Keyboard="Text" FontSize="20" Text="{Binding Name, Mode=OneWayToSource}"/>
+                <Entry Placeholder="Sur Name" Keyboard="Text" FontSize="20" Text="{Binding SurName}"/>
+                <Entry Placeholder="Age" Keyboard="Numeric" FontSize="20" Text="{Binding Age}"/>
+                <Button x:Name="addUserBtn" FontSize="27" Command="{Binding AddUserCommand}" Text="Register"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
