@@ -69,6 +69,7 @@ namespace Mobile.ViewsModels
             try
             {
                 Users.Clear();
+                Rows.Clear();
                 var users = await APIService.GetUsers();
                 foreach (User user in users)
                 {
@@ -91,7 +92,7 @@ namespace Mobile.ViewsModels
         }
         // Commands
         public ICommand LongPressCommand => new Command(ShowRowIcons);
-        void ShowRowIcons(object o)
+        private void ShowRowIcons(object o)
         {
             ListRow row = o as ListRow;
             row.SetShowIcon(this);
