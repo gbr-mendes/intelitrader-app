@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Mobile.ViewsModels"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              Visual="Material"
              x:Class="Mobile.Views.MainPage">
     <ContentPage.BindingContext>
@@ -9,16 +10,27 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Padding="20">
-            <FlexLayout JustifyContent="SpaceBetween">
+            <FlexLayout JustifyContent="SpaceBetween" HeightRequest="50" Padding="17">
                 <Label Text="User Registration" FontSize="25" TextColor="Black"/>
                 <Button Text="Add" Clicked="Navigate_to_AddUser"/>
             </FlexLayout>
             <ContentView IsVisible="{Binding ShowUsersList}">
-                <ListView ItemsSource="{Binding Users}">
+                <ListView x:Name="rowsList" ItemsSource="{Binding Rows}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Label Text="{Binding Name}" FontSize="25" TextColor="Black"/>
+                                <FlexLayout
+                                    JustifyContent="SpaceBetween"
+                                    xct:TouchEffect.PressedBackgroundColor="#D8D8D8"
+                                    xct:TouchEffect.AnimationDuration="350" xct:TouchEffect.PressedScale=".97"
+                                    xct:TouchEffect.LongPressCommand="{Binding Path=BindingContext.LongPressCommand, Source={x:Reference rowsList}}"
+                                    xct:TouchEffect.LongPressCommandParameter="{Binding .}">
+                                    <Label Text="{Binding User.Name}" FontSize="25" TextColor="Black"/>
+                                    <StackLayout Orientation="Horizontal" IsVisible="{Binding ShowIcons}">
+                                        <ImageButton Source="update.png" Scale="0.7"/>
+                                        <ImageButton  Source="delete.png"/>
+                                    </StackLayout>
+                                </FlexLayout>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

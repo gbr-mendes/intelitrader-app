@@ -1,4 +1,5 @@
-﻿using Mobile.Models;
+﻿using Mobile.Helpers;
+using Mobile.Models;
 using Mobile.Services;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace Mobile.ViewsModels
 
         //Properties
         public ObservableCollection<User> Users { get; set; } = new ObservableCollection<User>();
+        public ObservableCollection<ListRow> Rows { get; set; } = new ObservableCollection<ListRow>();
 
 
         private bool _showUsersList = false;
@@ -43,6 +45,7 @@ namespace Mobile.ViewsModels
                 NotifyPropertyChanged();
             }
         }
+        
         //Services declaration
         private readonly IUserRegistrationAPI APIService;
 
@@ -50,6 +53,15 @@ namespace Mobile.ViewsModels
         public MainPageViewModel()
         {
             APIService = DependencyService.Get<IUserRegistrationAPI>();
+
+        }
+        public void GenerateRows()
+        {
+            foreach(User user in Users)
+            {
+                ListRow row = new ListRow(user);
+                Rows.Add(row);
+            }
         }
         // methods
         public async void PopulateUsers()
@@ -70,11 +82,19 @@ namespace Mobile.ViewsModels
                 {
                     ShowNoUsersLabel = true;
                 }
+                GenerateRows();
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+        // Commands
+        public ICommand LongPressCommand => new Command(ShowRowIcons);
+        void ShowRowIcons(object o)
+        {
+            ListRow row = o as ListRow;
+            row.SetShowIcon(this);
         }
     }
 }
