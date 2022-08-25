@@ -14,6 +14,6 @@ namespace Mobile.Services
         Task<IEnumerable<User>> GetUsers();
         Task AddUser(AddUpdateUserDto user);
         void UpdateUser(string id, AddUpdateUserDto request);
-        void DeleteUser(string id);
+        Task DeleteUser(string id);
     }
 }

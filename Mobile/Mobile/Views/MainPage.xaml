@@ -21,14 +21,23 @@
                             <ViewCell>
                                 <FlexLayout
                                     JustifyContent="SpaceBetween"
-                                    xct:TouchEffect.PressedBackgroundColor="#D8D8D8"
-                                    xct:TouchEffect.AnimationDuration="350" xct:TouchEffect.PressedScale=".97"
-                                    xct:TouchEffect.LongPressCommand="{Binding Path=BindingContext.LongPressCommand, Source={x:Reference rowsList}}"
-                                    xct:TouchEffect.LongPressCommandParameter="{Binding .}">
-                                    <Label Text="{Binding User.Name}" FontSize="25" TextColor="Black"/>
+                                    >
+                                    <Label
+                                        Text="{Binding User.Name}"
+                                        FontSize="25"
+                                        TextColor="Black"
+                                        WidthRequest="300"
+                                        xct:TouchEffect.PressedBackgroundColor="#D8D8D8"
+                                        xct:TouchEffect.AnimationDuration="350" xct:TouchEffect.PressedScale=".97"
+                                        xct:TouchEffect.LongPressCommand="{Binding Path=BindingContext.LongPressCommand, Source={x:Reference rowsList}}"
+                                        xct:TouchEffect.LongPressCommandParameter="{Binding .}"/>
+
                                     <StackLayout Orientation="Horizontal" IsVisible="{Binding ShowIcons}">
                                         <ImageButton Source="update.png" Scale="0.7"/>
-                                        <ImageButton  Source="delete.png"/>
+                                        <ImageButton
+                                            Source="delete.png"
+                                            Command="{Binding Path=BindingContext.DeleteUserCommand, Source={x:Reference rowsList}}"
+                                            CommandParameter="{Binding .}"/>
                                     </StackLayout>
                                 </FlexLayout>
                             </ViewCell>

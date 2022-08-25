@@ -33,13 +33,11 @@ namespace Mobile.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public void DeleteUser(string id)
+        public async Task DeleteUser(string id)
         {
-            User user = Users.Find(u => u.Id == id);
-            if(user != null)
-            {
-                Users.Remove(user);
-            }
+            HttpClient httpClient = GetClient();
+            var response = await httpClient.DeleteAsync($"http://192.168.100.110:8000/api/Users/{id}");
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task<IEnumerable<User>> GetUsers()

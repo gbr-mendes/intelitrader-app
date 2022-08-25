@@ -97,5 +97,21 @@ namespace Mobile.ViewsModels
             ListRow row = o as ListRow;
             row.SetShowIcon(this);
         }
+
+        public ICommand DeleteUserCommand => new Command(DeleteUser);
+        private void DeleteUser(object o)
+        {
+            ListRow row = o as ListRow;
+            try
+            {
+                APIService.DeleteUser(row.User.Id);
+                Users.Remove(row.User);
+                Rows.Remove(row);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }
