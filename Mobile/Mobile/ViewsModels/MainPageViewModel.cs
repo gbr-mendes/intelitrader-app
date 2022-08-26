@@ -1,6 +1,7 @@
 ﻿using Mobile.Helpers;
 using Mobile.Models;
 using Mobile.Services;
+using Mobile.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -48,12 +49,15 @@ namespace Mobile.ViewsModels
         
         //Services declaration
         private readonly IUserRegistrationAPI APIService;
+        public INavigation Navigation { get; set; }
 
         // Constructors
-        public MainPageViewModel()
+        public MainPageViewModel() { }     
+        
+        public MainPageViewModel(INavigation navigation)
         {
             APIService = DependencyService.Get<IUserRegistrationAPI>();
-
+            Navigation = navigation;
         }
         public void GenerateRows()
         {
@@ -96,6 +100,14 @@ namespace Mobile.ViewsModels
         {
             ListRow row = o as ListRow;
             row.SetShowIcon(this);
+        }
+
+        public ICommand GoToUpdateUserPageCommand => new Command(GoToUpdateUserPage);
+        private async void GoToUpdateUserPage(object o)
+        {
+            ListRow row = o as ListRow;
+            User user = row.User;
+            await Navigation.PushAsync(new AddUpdateUserPage(user));
         }
 
         public ICommand DeleteUserCommand => new Command(DeleteUser);

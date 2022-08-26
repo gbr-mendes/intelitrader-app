@@ -12,7 +12,7 @@ using Xamarin.Forms;
 
 namespace Mobile.ViewsModels
 {
-    public class AddUserViewModel: INotifyPropertyChanged
+    public class AddUpdateUserViewModel: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -21,12 +21,12 @@ namespace Mobile.ViewsModels
         }
 
         private readonly IUserRegistrationAPI APIService;
-        public AddUserViewModel() 
+        public AddUpdateUserViewModel() 
         {
             APIService = DependencyService.Get<IUserRegistrationAPI>();
         }
 
-        public ICommand AddUserCommand => new Command(AddUser);
+        public ICommand AddUserCommand => new Command(AddOrUpdateUser);
         
         private string _name = "";
         public string Name
@@ -59,12 +59,31 @@ namespace Mobile.ViewsModels
                 NotifyPropertyChanged();
             }
         }
-        public async void AddUser()
+
+        private string _btnText = "Register";
+        public string BtnText
+        {
+            get { return _btnText; }
+            set
+            {
+                _btnText = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public async void AddOrUpdateUser(object o)
         {
             try
             {
-                AddUpdateUserDto newUser = new AddUpdateUserDto(Name, SurName, Age);
-                await APIService.AddUser(newUser);
+                User user = o as User;
+                AddUpdateUserDto userData = new AddUpdateUserDto(Name, SurName, Age);
+                if(user != null)
+                {
+                    await APIService.UpdateUser(user.Id, userData);
+                }
+                else 
+                { 
+                    await APIService.AddUser(userData);
+                }
                 CleanFields();
             }
             catch(Exception ex)

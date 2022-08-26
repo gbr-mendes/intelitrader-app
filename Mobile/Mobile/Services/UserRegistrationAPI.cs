@@ -48,20 +48,11 @@ namespace Mobile.Services
             var jsonString = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<IEnumerable<User>>(jsonString);
         }
-        public User GetSingleUser(string id)
+   
+        public async Task UpdateUser(string id, AddUpdateUserDto request)
         {
-            User user = Users.Find(u => u.Id == id);
-            return user;
-        }
-        public void UpdateUser(string id, AddUpdateUserDto request)
-        {
-            User user = Users.Find(u => u.Id == id);
-            if(user != null)
-            {
-                user.Name = request.Name;
-                user.SurName = request.SurName;
-                user.Age = request.Age;
-            }
+            HttpClient httpClient = GetClient();
+            var response = await httpClient.PutAsync($"http://192.168.100.110:8000/api/Users/{id}", new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"));
         }
     }
 }

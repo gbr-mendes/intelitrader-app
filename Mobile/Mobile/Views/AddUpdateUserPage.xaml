@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Mobile.ViewsModels"
+             Visual="Material"
+             x:Class="Mobile.Views.AddUpdateUserPage">
+    <ContentPage.BindingContext>
+        <local:AddUpdateUserViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Label x:Name="titlePage" Text="Add User"
+                FontSize="27"
+                   TextColor="#000"
+                HorizontalOptions="CenterAndExpand" />
+            <StackLayout Margin="5">
+                <Entry x:Name="entryName" Placeholder="Name" Keyboard="Text" FontSize="20" Text="{Binding Name}"/>
+                <Entry x:Name="entrySurName" Placeholder="Sur Name" Keyboard="Text" FontSize="20" Text="{Binding SurName}"/>
+                <Entry x:Name="entryAge" Placeholder="Age" Keyboard="Numeric" FontSize="20" Text="{Binding Age}"/>
+                <Button x:Name="addUserUpdateBtn" FontSize="27" Command="{Binding AddUserCommand}" Text="Register"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

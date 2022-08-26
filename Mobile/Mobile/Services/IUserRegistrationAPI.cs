@@ -13,7 +13,7 @@ namespace Mobile.Services
         HttpClient GetClient();
         Task<IEnumerable<User>> GetUsers();
         Task AddUser(AddUpdateUserDto user);
-        void UpdateUser(string id, AddUpdateUserDto request);
+        Task UpdateUser(string id, AddUpdateUserDto request);
         Task DeleteUser(string id);
     }
 }

@@ -20,7 +20,7 @@ namespace Mobile.Views
         {
             InitializeComponent();
 
-            _mainPageViewModel = new MainPageViewModel();
+            _mainPageViewModel = new MainPageViewModel(Navigation);
             BindingContext = _mainPageViewModel;
         }
 
@@ -31,7 +31,7 @@ namespace Mobile.Views
 
         private async void Navigate_to_AddUser(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AddUserPage());
+            await Navigation.PushAsync(new AddUpdateUserPage());
         }
     }
 }
