@@ -1,4 +1,5 @@
-﻿using Mobile.Models;
+﻿using Mobile.Exceptions.Users;
+using Mobile.Models;
 using Mobile.Models.Dtos;
 using Mobile.Services;
 using System;
@@ -21,12 +22,16 @@ namespace Mobile.ViewsModels
         }
 
         private readonly IUserRegistrationAPI APIService;
+
+        private readonly IMessageService MessageService;
+
         public AddUpdateUserViewModel() 
         {
             APIService = DependencyService.Get<IUserRegistrationAPI>();
+            MessageService = DependencyService.Get<IMessageService>();
         }
 
-        public ICommand AddUserCommand => new Command(AddOrUpdateUser);
+        public ICommand AddOrUpdateUserCommand => new Command(AddOrUpdateUser);
         
         private string _name = "";
         public string Name
@@ -79,12 +84,19 @@ namespace Mobile.ViewsModels
                 if(user != null)
                 {
                     await APIService.UpdateUser(user.Id, userData);
+                    await MessageService.ShowAsync("User updated successfuly");
                 }
                 else 
                 { 
                     await APIService.AddUser(userData);
+                    await MessageService.ShowAsync("User added successfuly");
                 }
                 CleanFields();
+
+            }
+            catch(AddUpdateUserDtoException ex)
+            {
+                await MessageService.ShowAsync(ex.Message, "Error");
             }
             catch(Exception ex)
             {

@@ -53,6 +53,7 @@ namespace Mobile.Services
         {
             HttpClient httpClient = GetClient();
             var response = await httpClient.PutAsync($"http://192.168.100.110:8000/api/Users/{id}", new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"));
+            response.EnsureSuccessStatusCode();
         }
     }
 }

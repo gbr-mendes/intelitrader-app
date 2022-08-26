@@ -38,6 +38,7 @@
                                             Command="{Binding Path=BindingContext.GoToUpdateUserPageCommand, Source={x:Reference rowsList}}"
                                             CommandParameter="{Binding .}"/>
                                         <ImageButton
+                                            Margin="0,0,50,0"
                                             Source="delete.png"
                                             Command="{Binding Path=BindingContext.DeleteUserCommand, Source={x:Reference rowsList}}"
                                             CommandParameter="{Binding .}"/>

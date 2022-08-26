@@ -17,7 +17,7 @@
                 <Entry x:Name="entryName" Placeholder="Name" Keyboard="Text" FontSize="20" Text="{Binding Name}"/>
                 <Entry x:Name="entrySurName" Placeholder="Sur Name" Keyboard="Text" FontSize="20" Text="{Binding SurName}"/>
                 <Entry x:Name="entryAge" Placeholder="Age" Keyboard="Numeric" FontSize="20" Text="{Binding Age}"/>
-                <Button x:Name="addUserUpdateBtn" FontSize="27" Command="{Binding AddUserCommand}" Text="Register"/>
+                <Button x:Name="addUserUpdateBtn" FontSize="27" Command="{Binding AddOrUpdateUserCommand}" Text="Register"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

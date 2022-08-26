@@ -12,6 +12,7 @@ namespace Mobile
         {
             InitializeComponent();
             DependencyService.Register<IUserRegistrationAPI, UserRegistrationAPI>();
+            DependencyService.Register<IMessageService, MessageService>();
             MainPage = new NavigationPage(new MainPage());
         }
 
