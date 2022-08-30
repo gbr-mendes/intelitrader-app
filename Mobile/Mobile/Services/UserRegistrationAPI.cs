@@ -10,7 +10,7 @@ namespace Mobile.Services
 {
     internal class UserRegistrationAPI : IUserRegistrationAPI
     {
-        private readonly string _url = "http://192.168.100.110:8000/api";
+        private readonly string _url = "http://192.168.42.210:8000/api/Users";
         public HttpClient GetClient()
         {
             HttpClient client = new HttpClient();
@@ -21,7 +21,7 @@ namespace Mobile.Services
         public async Task<IEnumerable<User>> GetUsers()
         {
             HttpClient httpClient = GetClient();
-            var response = await httpClient.GetAsync($"{_url}/Users");
+            var response = await httpClient.GetAsync(_url);
             response.EnsureSuccessStatusCode();
             var jsonString = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<IEnumerable<User>>(jsonString);
@@ -29,19 +29,19 @@ namespace Mobile.Services
         public async Task AddUser(AddUpdateUserDto user)
         {
             HttpClient httpClient = GetClient();
-            var response = await httpClient.PostAsync($"{_url}/Users", new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json"));
+            var response = await httpClient.PostAsync(_url, new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json"));
             response.EnsureSuccessStatusCode();
         }
         public async Task UpdateUser(string id, AddUpdateUserDto request)
         {
             HttpClient httpClient = GetClient();
-            var response = await httpClient.PutAsync($"{_url}/Users/{id}", new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"));
+            var response = await httpClient.PutAsync($"{_url}/{id}", new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"));
             response.EnsureSuccessStatusCode();
         }
         public async Task DeleteUser(string id)
         {
             HttpClient httpClient = GetClient();
-            var response = await httpClient.DeleteAsync($"{_url}/Users/{id}");
+            var response = await httpClient.DeleteAsync($"{_url}/{id}");
             response.EnsureSuccessStatusCode();
         }
     }
