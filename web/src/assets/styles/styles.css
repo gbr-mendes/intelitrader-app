@@ -3,7 +3,6 @@
 * {
     font-family: 'Roboto Mono', monospace;
 }
-
 #navbar{
     background-color: #01f75c;
 }
@@ -31,6 +30,9 @@ div .user-list .user:hover{
 .user-actions i{
     cursor: pointer;
 
+}
+.user-actions a{
+    color: #000 !important;
 }
 .form-btn{
     background-color: #000;

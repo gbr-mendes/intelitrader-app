@@ -1,3 +1,7 @@
+<?php
+include('./services/ApiService.php');
+$api_service = new ApiService('http://192.168.42.210:8000/api/Users');
+?>
 <!DOCTYPE html>
 <html lang="en">
 

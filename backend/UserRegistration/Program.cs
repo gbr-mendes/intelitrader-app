@@ -4,8 +4,19 @@ using UserRegistration.Services.UserServices;
 using Serilog;
 using Serilog.Events;
 
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
+//setup cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy  =>
+                      {
+                          policy.WithOrigins("http://localhost:8080");
+                      });
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -39,7 +50,7 @@ app.UseSwaggerUI();
 
 
 app.UseHttpsRedirection();
-
+app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
 
 app.MapControllers();
