@@ -21,6 +21,8 @@ class ApiService
                 if ($data)
                     curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
                 break;
+            case "DELETE":
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
             default:
                 if ($data)
                     $url = sprintf("%s?%s", $url, http_build_query($data));
@@ -51,6 +53,13 @@ class ApiService
     {
         $url = $this->api_url . '/' . $user_id;
         $data = json_decode($this->callApi('GET', $url, false));
+        return $data;
+    }
+
+    public function delete_user($user_id)
+    {
+        $url = $this->api_url . '/' . $user_id;
+        $data = json_decode($this->callApi("DELETE", $url, false));
         return $data;
     }
 }
