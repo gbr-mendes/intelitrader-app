@@ -32,3 +32,12 @@ div .user-list .user:hover{
     cursor: pointer;
 
 }
+.form-btn{
+    background-color: #000;
+    color: #fff;
+    transition: 0.7s;
+}
+.form-btn:hover{
+    color: #fff;
+    padding: 10px 30px;
+}
