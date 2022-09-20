@@ -37,7 +37,7 @@ class ApiService
         // EXECUTE:
         $result = curl_exec($curl);
         if (!$result) {
-            die("Connection Failure");
+            throw new Exception('Connection Failure');
         }
         curl_close($curl);
         return $result;
@@ -45,12 +45,14 @@ class ApiService
 
     public function get_users()
     {
+
         $data = json_decode($this->callApi('GET', $this->api_url, false));
         return $data;
     }
 
     public function get_user_by_id($user_id)
     {
+
         $url = $this->api_url . '/' . $user_id;
         $data = json_decode($this->callApi('GET', $url, false));
         return $data;
@@ -61,5 +63,21 @@ class ApiService
         $url = $this->api_url . '/' . $user_id;
         $data = json_decode($this->callApi("DELETE", $url, false));
         return $data;
+    }
+
+    public function add_user(AddUpdateUserDto $user)
+    {
+
+        $data = json_encode($user);
+        $response = $this->callApi('POST', $this->api_url, $data);
+        return json_decode($response);
+    }
+    public function update_user(AddUpdateUserDto $user, $user_id)
+    {
+
+        $url = $this->api_url . '/' . $user_id;
+        $data = json_encode($user);
+        $response = $this->callApi('PUT', $url, $data);
+        return json_decode($response);
     }
 }

@@ -1,8 +1,16 @@
 <?php
-$users = $api_service->get_users();
+$users = [];
+try {
+    $users = $api_service->get_users();
+} catch (Exception $exception) {
+    $alert_message = "An unexpected error has occured";
+}
 ?>
 <div class="d-flex flex-column justify-content-center align-items-center p-3">
     <h1>Users List</h1>
+    <div class="alert <?php echo isset($alert_message) ? 'alert-danger' : 'd-none' ?>" role="alert">
+        <?php echo isset($alert_message) ? $alert_message : null ?>
+    </div>
     <div class="user-list col-4 p-4">
         <?php foreach ($users as $user) : ?>
             <div class="user d-flex justify-content-between align-items-center p-2">
