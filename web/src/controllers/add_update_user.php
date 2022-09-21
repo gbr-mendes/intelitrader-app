@@ -9,7 +9,7 @@ if (isset($_GET['user_id'])) {
         $title = isset($result->id) ? "Update User" : "Add User";
         $method = isset($result->id) ? "PUT" : "POST";
         $name = $result->name ?? '';
-        $sur_name = $result->surName ?? '';
+        $surName = $result->surName ?? '';
         $age = $result->age ?? '';
     } catch (Exception $e) {
         $alert_message = $e->getMessage();
