@@ -3,7 +3,7 @@
     <div class="alert <?php echo isset($alert_class) ? $alert_class : 'd-none' ?>" role="alert">
         <?php echo isset($alert_message) ? $alert_message : null ?>
     </div>
-    <div class="user-list col-4 p-4">
+    <div class="user-list col-10 col-md-4 p-4">
         <?php foreach ($users as $user) : ?>
             <div class="user d-flex justify-content-between align-items-center p-2">
                 <h6><?php echo "{$user->name} {$user->surName}"; ?></h6>
