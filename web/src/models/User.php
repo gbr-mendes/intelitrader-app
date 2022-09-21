@@ -3,11 +3,11 @@ class User
 {
     public $id;
     public string $name;
-    public string $surName = "";
+    public string $sur_name = "";
     public int $age;
-    private iApiService $api_service;
+    private iApi_service $api_service;
 
-    public function __construct($data, iApiService $service)
+    public function __construct($data, iApi_service $service)
     {
         $this->api_service = $service;
 
@@ -16,10 +16,10 @@ class User
         $this->name = $data['name'];
         $this->age = $data['age'];
         $this->surName = $data['surName'];
-        return User::saveUser($this);
+        return User::save_user($this);
     }
 
-    private function saveUser($user)
+    private function save_user($user)
     {
         if (is_null($user->id)) {
             $result = $this->api_service->add_user($user);

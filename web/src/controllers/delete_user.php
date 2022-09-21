@@ -1,6 +1,6 @@
 <?php
-include('../services/ApiService.php');
-$api_service = new ApiService('http://192.168.42.210:8000/api/Users');
+include('../services/Api_service.php');
+$api_service = new Api_service('http://192.168.42.210:8000/api/Users');
 
 if (isset($_GET['user_id'])) {
     try {

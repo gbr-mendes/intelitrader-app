@@ -1,8 +1,8 @@
 <?php
-interface iApiService
+interface iApi_service
 {
     public function __construct($api_url);
-    public static function callApi($method, $url, $data);
+    public static function call_api($method, $url, $data);
     public function get_users();
     public function get_user_by_id($user_id);
     public function delete_user($user_id);

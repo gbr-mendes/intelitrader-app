@@ -1,7 +1,7 @@
 <?php
-include('iApiService.php');
+include('iApi_service.php');
 
-class ApiService implements iApiService
+class Api_service implements iApi_service
 {
     private $api_url;
 
@@ -9,7 +9,7 @@ class ApiService implements iApiService
     {
         $this->api_url = $api_url;
     }
-    public static function callApi($method, $url, $data)
+    public static function call_api($method, $url, $data)
     {
         $curl = curl_init();
         switch ($method) {
@@ -48,7 +48,7 @@ class ApiService implements iApiService
     public function get_users()
     {
 
-        $data = json_decode(ApiService::callApi('GET', $this->api_url, false));
+        $data = json_decode(Api_service::call_api('GET', $this->api_url, false));
         return $data;
     }
 
@@ -56,21 +56,21 @@ class ApiService implements iApiService
     {
 
         $url = $this->api_url . '/' . $user_id;
-        $data = json_decode(ApiService::callApi('GET', $url, false));
+        $data = json_decode(Api_service::call_api('GET', $url, false));
         return $data;
     }
 
     public function delete_user($user_id)
     {
         $url = $this->api_url . '/' . $user_id;
-        $data = json_decode(ApiService::callApi("DELETE", $url, false));
+        $data = json_decode(Api_service::call_api("DELETE", $url, false));
         return $data;
     }
 
     public function add_user(User $user)
     {
         $data = json_encode($user);
-        $response = ApiService::callApi('POST', $this->api_url, $data);
+        $response = Api_service::call_api('POST', $this->api_url, $data);
         return json_decode($response);
     }
     public function update_user(User $user, $user_id)
@@ -78,7 +78,7 @@ class ApiService implements iApiService
 
         $url = $this->api_url . '/' . $user_id;
         $data = json_encode($user);
-        $response = ApiService::callApi('PUT', $url, $data);
+        $response = Api_service::call_api('PUT', $url, $data);
         return json_decode($response);
     }
 }
