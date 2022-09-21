@@ -15,7 +15,6 @@ if (isset($_GET['user_id'])) {
     } catch (Exception $e) {
         $alert_message = $e->getMessage();
         $alert_class = 'alert-danger';
-        //header("Location: /index.php?message=${alert_message}&alert_class=${alert_class}");
     }
 }
 
@@ -34,13 +33,11 @@ if (isset($_POST['submit'])) {
                 $name = '';
                 $surName =  '';
                 $age = '';
-                //header("Location: /index.php?page=add_update_user&message=${alert_message}&alert_class=${alert_class}");
             }
         } elseif ($method == "PUT") {
             $response = $api_service->update_user($user, $_GET['user_id']);
             if (isset($response->name)) {
                 $alert_message = "User updated successfully";
-                //header("Location: /index.php?page=add_update_user&user_id={$_GET['user_id']}&message=${alert_message}&alert_class=${alert_class}");
             } else {
                 $alert_class = "alert-danger";
                 $alert_message = "Ocorreu um erro inseperado";
@@ -49,11 +46,6 @@ if (isset($_POST['submit'])) {
     } catch (Exception $e) {
         $alert_message = $e->getMessage();
         $alert_class = 'alert-danger';
-        // if ($method == "PUT") {
-        //     header("Location: /index.php?page=add_update_user&user_id={$_GET['user_id']}&message=${alert_message}&alert_class=${alert_class}");
-        // } else {
-        //     header("Location: /index.php?page=add_update_user&message=${alert_message}&alert_class=${alert_class}");
-        // }
     }
 }
 
