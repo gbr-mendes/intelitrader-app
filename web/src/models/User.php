@@ -5,9 +5,9 @@ class User
     public string $name;
     public string $surName = "";
     public int $age;
-    private $api_service = null;
+    private iApiService $api_service;
 
-    public function __construct($data, $service)
+    public function __construct($data, iApiService $service)
     {
         $this->api_service = $service;
 
