@@ -2,7 +2,6 @@
 $title = "Add User";
 $method = "POST";
 $alert_class = 'd-none';
-$alert_message = '';
 
 if (isset($_GET['user_id'])) {
     try {
