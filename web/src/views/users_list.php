@@ -1,14 +1,6 @@
-<?php
-$users = [];
-try {
-    $users = $api_service->get_users();
-} catch (Exception $exception) {
-    $alert_message = "An unexpected error has occured";
-}
-?>
 <div class="d-flex flex-column justify-content-center align-items-center p-3">
     <h1>Users List</h1>
-    <div class="alert <?php echo isset($alert_message) ? 'alert-danger' : 'd-none' ?>" role="alert">
+    <div class="alert <?php echo isset($alert_class) ? $alert_class : 'd-none' ?>" role="alert">
         <?php echo isset($alert_message) ? $alert_message : null ?>
     </div>
     <div class="user-list col-4 p-4">
@@ -18,7 +10,7 @@ try {
                 <div class="user-actions">
                     <div class="d-flex justify-content-center align-items-center">
                         <a href="<?php echo "?page=add_update_user&user_id={$user->id}" ?>" class="me-2"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
-                        <form action=<?php echo "{$_SERVER["PHP_SELF"]}?page=users_list&user_id={$user->id}&delete=true" ?> method="POST">
+                        <form action="controllers/delete_user.php<?= "?user_id={$user->id}" ?>" method="POST">
                             <button type="submit" class="btn" name="delete">
                                 <i class="fa-solid fa-trash fa-lg"></i>
                             </button>

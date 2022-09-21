@@ -1,7 +1,17 @@
-<?php include('./inc/header.php') ?>
+<?php
+include('./services/ApiService.php');
+include('./models/AddUpdateUserDto.php');
+
+$pages = ['users_list', 'add_update_user', 'delete_user'];
+$controller = $_GET['page'] ?? 'users_list';
+$controller = !in_array($controller, $pages) ? 'users_list' : $controller;
+$api_service = new ApiService('http://192.168.42.210:8000/api/Users');
+
+include('./includes/header.php');
+?>
 <container class="content">
     <div class="vh-100">
-        <?php include('./inc/content.php'); ?>
+        <?php include("./controllers/${controller}.php") ?>
     </div>
 </container>
-<?php include('./inc/footer.php') ?>
+<?php include('./includes/footer.php') ?>

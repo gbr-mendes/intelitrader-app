@@ -1,12 +1,3 @@
-<?php
-include('./services/ApiService.php');
-$api_service = new ApiService('http://192.168.42.210:8000/api/Users');
-
-if (isset($_GET['user_id']) && $_GET['page'] != 'add_update_user' && $_GET['delete'] == 'true') {
-    $api_service->delete_user($_GET['user_id']);
-    header("Location: index.php?page=users_list");
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
