@@ -5,18 +5,19 @@ class AddUpdateUserDto
     public string $surName = "";
     public int $age;
 
-    public function __construct($name, $surName, $age)
+    public function __construct($post_request)
     {
-        if (empty($name)) {
+
+        if (empty($post_request['name'])) {
             throw new Exception('The field name is required');
         } else {
-            $this->name = $name;
+            $this->name = $post_request['name'];
         }
-        if (!$age > 0) {
+        if (!$post_request['age'] > 0) {
             throw new Exception('The field age must be greater than 0');
         } else {
-            $this->age = $age;
+            $this->age = $post_request['age'];
         }
-        $this->surName = $surName;
+        $this->surName = $post_request['surName'];
     }
 }

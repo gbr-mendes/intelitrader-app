@@ -18,28 +18,24 @@ if (isset($_GET['user_id'])) {
 }
 
 if (isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $surName = $_POST['surName'];
-    $age = $_POST['age'];
-
     try {
-        $user = new AddUpdateUserDto($name, $surName, $age);
+        $user = new AddUpdateUserDto($_POST);
         $alert_class = "alert-success";
         if ($method == "POST") {
             $response = $api_service->add_user($user);
             if (isset($response->statusCode) && $response->statusCode == 201) {
                 $alert_message = $response->message;
-                $name = '';
-                $surName =  '';
-                $age = '';
             }
         } elseif ($method == "PUT") {
-            $response = $api_service->update_user($user, $_GET['user_id']);
-            if (isset($response->name)) {
+            $result = $api_service->update_user($user, $_GET['user_id']);
+            if (isset($result->name)) {
+                $name = $result->name;
+                $surName = $result->surName ?? '';
+                $age = $result->age ?? '';
                 $alert_message = "User updated successfully";
             } else {
                 $alert_class = "alert-danger";
-                $alert_message = "Ocorreu um erro inseperado";
+                $alert_message = "An unexpected error has occurred";
             }
         }
     } catch (Exception $e) {
