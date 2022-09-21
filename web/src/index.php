@@ -1,6 +1,6 @@
 <?php
 include('./services/ApiService.php');
-include('./models/AddUpdateUserDto.php');
+include('./models/User.php');
 
 $pages = ['users_list', 'add_update_user', 'delete_user'];
 $controller = $_GET['page'] ?? 'users_list';

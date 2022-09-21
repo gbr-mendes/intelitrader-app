@@ -5,6 +5,7 @@
             <?= $alert_message ?? '' ?>
         </div>
         <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>?page=add_update_user<?= isset($_GET['user_id']) ? "&user_id={$_GET['user_id']}" : null ?>" method="POST">
+            <input type="text" value="<?= $_GET['user_id'] ?? '' ?>" class="d-none" name="<?= isset($_GET['user_id']) ? 'id' : null ?>">
             <div class="form-group d-flex justify-content-center align-items-center col-12 m-3">
                 <label for="name" class="me-2 col-3">Name:</label>
                 <input type="text" class="form-control col-9" name="name" placeholder="Type your name" id="name" value="<?php echo $name ?? '' ?>">

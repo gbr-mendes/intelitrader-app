@@ -65,14 +65,13 @@ class ApiService
         return $data;
     }
 
-    public function add_user(AddUpdateUserDto $user)
+    public function add_user(User $user)
     {
-
         $data = json_encode($user);
         $response = $this->callApi('POST', $this->api_url, $data);
         return json_decode($response);
     }
-    public function update_user(AddUpdateUserDto $user, $user_id)
+    public function update_user(User $user, $user_id)
     {
 
         $url = $this->api_url . '/' . $user_id;
