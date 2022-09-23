@@ -11,41 +11,22 @@ class User
     public string $name;
     public string $sur_name = "";
     public int $age;
-    private iApi_service $api_service;
 
-    public function __construct($data, iApi_service $service)
+    public function __construct($data)
     {
-        $this->api_service = $service;
-
-        User::validate($data);
         $this->id = $data['id'] ?? null;
         $this->name = $data['name'];
-        $this->age = $data['age'];
         $this->surName = $data['surName'];
+        $this->age = (int)$data['age'];
+        $this->validate();
     }
 
-    public function save_user()
+    public function validate()
     {
-        if (is_null($this->id)) {
-            $result = $this->api_service->add_user($this);
-            if (!isset($result->statusCode) || $result->statusCode !== 201) {
-                throw new Exception('An unnexpected error has ocurred');
-            }
-        } else {
-            $result = $this->api_service->update_user($this, $this->id);
-            if (!isset($result->name)) {
-                throw new Exception('An unnexpected error has ocurred');
-            }
-        }
-        return true;
-    }
-
-    private function validate($data)
-    {
-        if (empty($data['name'])) {
+        if (empty($this->name)) {
             throw new Exception('The field name is required');
         }
-        if (!$data['age'] > 0) {
+        if (!$this->age > 0) {
             throw new Exception('The field age must be greater than 0');
         }
     }

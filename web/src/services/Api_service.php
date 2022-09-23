@@ -2,10 +2,9 @@
 
 namespace Web\services;
 
-use Exception;
-use Web\models\User;
-
 include('iApi_service.php');
+
+use Exception;
 
 class Api_service implements iApi_service
 {
@@ -15,8 +14,9 @@ class Api_service implements iApi_service
     {
         $this->api_url = $api_url;
     }
-    public static function call_api($method, $url, $data)
+    public function call_api($method, $data, $query_param = null)
     {
+        $this->set_query_param($query_param);
         $curl = curl_init();
         switch ($method) {
             case "POST":
@@ -33,10 +33,10 @@ class Api_service implements iApi_service
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
             default:
                 if ($data)
-                    $url = sprintf("%s?%s", $url, http_build_query($data));
+                    $url = sprintf("%s?%s", $this->api_url, http_build_query($data));
         }
         // OPTIONS:
-        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_URL, $this->api_url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
         ));
@@ -50,41 +50,10 @@ class Api_service implements iApi_service
         curl_close($curl);
         return $result;
     }
-
-    public function get_users()
+    public function set_query_param($param = null)
     {
-
-        $data = json_decode(Api_service::call_api('GET', $this->api_url, false));
-        return $data;
-    }
-
-    public function get_user_by_id($user_id)
-    {
-
-        $url = $this->api_url . '/' . $user_id;
-        $data = json_decode(Api_service::call_api('GET', $url, false));
-        return $data;
-    }
-
-    public function delete_user($user_id)
-    {
-        $url = $this->api_url . '/' . $user_id;
-        $data = json_decode(Api_service::call_api("DELETE", $url, false));
-        return $data;
-    }
-
-    public function add_user(User $user)
-    {
-        $data = json_encode($user);
-        $response = Api_service::call_api('POST', $this->api_url, $data);
-        return json_decode($response);
-    }
-    public function update_user(User $user, $user_id)
-    {
-
-        $url = $this->api_url . '/' . $user_id;
-        $data = json_encode($user);
-        $response = Api_service::call_api('PUT', $url, $data);
-        return json_decode($response);
+        if (!is_null($param)) {
+            $this->api_url  = $this->api_url . '/' . $param;
+        }
     }
 }

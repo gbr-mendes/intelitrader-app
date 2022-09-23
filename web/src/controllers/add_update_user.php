@@ -8,7 +8,7 @@ $alert_class = 'd-none';
 
 if (isset($_GET['user_id'])) {
     try {
-        $result = $api_service->get_user_by_id($_GET['user_id']);
+        $result = $user_services->get_user_by_id($_GET['user_id']);
         $title = isset($result->id) ? "Update User" : "Add User";
         $method = isset($result->id) ? "PUT" : "POST";
         $name = $result->name ?? '';
@@ -23,20 +23,27 @@ if (isset($_GET['user_id'])) {
 if (isset($_POST['submit'])) {
     try {
         $user = new User($_POST, $api_service);
-        $newUser = $user->save_user();
-        if ($newUser) {
-            $alert_class = "alert-success";
-            if ($method == "POST") {
+
+        $alert_class = "alert-success";
+        if (is_null($user->id)) {
+            $newUser = $user_services->add_user($user);
+            if ($newUser) {
                 $alert_message = "User added successfully";
             } else {
+                $alert_class = "alert-danger";
+                $alert_message = "An unexpected error has occurred";
+            }
+        } else {
+            $updatedUser = $user_services->update_user($user);
+            if ($updatedUser) {
                 $alert_message = "User updated successfully";
                 $name = $user->name;
                 $surName = $user->surName;
                 $age = $user->age;
+            } else {
+                $alert_class = "alert-danger";
+                $alert_message = "An unexpected error has occurred";
             }
-        } else {
-            $alert_class = "alert-danger";
-            $alert_message = "An unexpected error has occurred";
         }
     } catch (Exception $e) {
         $alert_message = $e->getMessage();
