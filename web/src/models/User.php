@@ -1,4 +1,10 @@
 <?php
+
+namespace Web\models;
+
+use Exception;
+use Web\services\iApi_service;
+
 class User
 {
     public $id;

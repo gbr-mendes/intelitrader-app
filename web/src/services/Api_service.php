@@ -1,4 +1,10 @@
 <?php
+
+namespace Web\services;
+
+use Exception;
+use Web\models\User;
+
 include('iApi_service.php');
 
 class Api_service implements iApi_service

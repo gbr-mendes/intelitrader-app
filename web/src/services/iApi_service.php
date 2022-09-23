@@ -1,4 +1,9 @@
 <?php
+
+namespace Web\services;
+
+use Web\models\User;
+
 interface iApi_service
 {
     public function __construct($api_url);
