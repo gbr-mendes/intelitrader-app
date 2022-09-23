@@ -22,18 +22,17 @@ class User
         $this->name = $data['name'];
         $this->age = $data['age'];
         $this->surName = $data['surName'];
-        return User::save_user($this);
     }
 
-    private function save_user($user)
+    public function save_user()
     {
-        if (is_null($user->id)) {
-            $result = $this->api_service->add_user($user);
+        if (is_null($this->id)) {
+            $result = $this->api_service->add_user($this);
             if (!isset($result->statusCode) || $result->statusCode !== 201) {
                 throw new Exception('An unnexpected error has ocurred');
             }
         } else {
-            $result = $this->api_service->update_user($user, $user->id);
+            $result = $this->api_service->update_user($this, $this->id);
             if (!isset($result->name)) {
                 throw new Exception('An unnexpected error has ocurred');
             }

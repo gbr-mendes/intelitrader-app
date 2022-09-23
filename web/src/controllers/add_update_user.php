@@ -1,4 +1,7 @@
 <?php
+
+use Web\models\User;
+
 $title = "Add User";
 $method = "POST";
 $alert_class = 'd-none';
@@ -20,7 +23,8 @@ if (isset($_GET['user_id'])) {
 if (isset($_POST['submit'])) {
     try {
         $user = new User($_POST, $api_service);
-        if ($user) {
+        $newUser = $user->save_user();
+        if ($newUser) {
             $alert_class = "alert-success";
             if ($method == "POST") {
                 $alert_message = "User added successfully";

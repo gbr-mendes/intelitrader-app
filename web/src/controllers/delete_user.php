@@ -1,4 +1,7 @@
 <?php
+
+use Web\services\Api_service;
+
 include('../services/Api_service.php');
 $api_service = new Api_service('http://192.168.42.210:8000/api/Users');
 
