@@ -8,6 +8,7 @@ use Web\services\UserServices;
 include('./models/User.php');
 include('./services/Api_service.php');
 include('./services/UserServices.php');
+include('./exceptions/ValidationException.php');
 
 
 $pages = ['users_list', 'add_update_user', 'delete_user'];

@@ -2,14 +2,13 @@
 
 namespace Web\models;
 
-use Exception;
-use Web\services\iApi_service;
+use Web\exceptions\ValidationException;
 
 class User
 {
     public $id;
     public string $name;
-    public string $sur_name = "";
+    public string $surName = "";
     public int $age;
 
     public function __construct($data)
@@ -24,10 +23,10 @@ class User
     public function validate()
     {
         if (empty($this->name)) {
-            throw new Exception('The field name is required');
+            throw new ValidationException('The field name is required');
         }
         if (!$this->age > 0) {
-            throw new Exception('The field age must be greater than 0');
+            throw new ValidationException('The field age must be greater than 0');
         }
     }
 }
